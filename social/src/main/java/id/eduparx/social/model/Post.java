@@ -1,10 +1,12 @@
 package id.eduparx.social.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,6 +17,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -29,6 +33,22 @@ import jakarta.validation.constraints.Size;
     @Index(name="idx_post_slug", columnList="slug")
 })
 public class Post {
+    
+    public Post(Long id,
+            @NotBlank(message = "Harus ada judul") @Size(min = 5, max = 200, message = "Judul 5 hingga 200 karakter") String title,
+            String slug, @NotBlank(message = "Konten harus diisi") String content, LocalDateTime publishedAt,
+            LocalDateTime createdAt, LocalDateTime updatedAt, User author, List<Comment> comments) {
+        this.id = id;
+        this.title = title;
+        this.slug = slug;
+        this.content = content;
+        this.publishedAt = publishedAt;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.author = author;
+        this.comments = comments;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -63,6 +83,11 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false, foreignKey = @ForeignKey(name = "fk_post_user_author"))
     private User author;
+
+    // One to Many dengan comment
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OrderBy("createdAt DESC")
+    private  List<Comment> comments;
 
     public Long getId() {
         return id;
@@ -126,6 +151,14 @@ public class Post {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
     
 }

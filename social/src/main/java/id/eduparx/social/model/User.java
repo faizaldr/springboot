@@ -62,6 +62,11 @@ public class User {
     // CascadeType.ALL, user terhapus maka post terhapus
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Post> posts;
+
+    // one to many comment
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Comment> comments;
+
     
     public enum Role{
         ADMIN, MODERATOR, USER
