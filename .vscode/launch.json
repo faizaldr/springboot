@@ -1,0 +1,62 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "SocialApplication",
+            "request": "launch",
+            "mainClass": "id.eduparx.social.SocialApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-DemoApplication<demo>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.demo.DemoApplication",
+            "projectName": "demo",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-Demo1Application<demo1>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.demo1.Demo1Application",
+            "projectName": "demo1",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-InventoryApplication<inventory>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.app.inventory.InventoryApplication",
+            "projectName": "inventory",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-MarketApplication<market>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.inixindo.market.MarketApplication",
+            "projectName": "market",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-SocialApplication<social>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "id.eduparx.social.SocialApplication",
+            "projectName": "social",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
