@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
     // mengurangi pembuatan objek baru di memory
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    // @Autowired
+    // private PasswordEncoder passwordEncoder;
 
     @Override
     public List<UserDto> getAll() {
