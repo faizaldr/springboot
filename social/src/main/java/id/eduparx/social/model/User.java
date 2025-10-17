@@ -26,6 +26,21 @@ import jakarta.validation.constraints.Size;;
 })
 public class User {
 
+    public User(){}
+
+    public User(Long id,
+            @NotBlank(message = "Username harus diisi") @Size(min = 3, max = 50, message = "karakter Username antara 3 sampai 50") String username,
+            @NotBlank(message = "Email harus diisi") @Email(message = "Harus format email") String email,
+            @NotBlank(message = "Password harus diisi") @Size(min = 6, message = "password minimal 6 karakter") String password,
+            String bio, Role role) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.bio = bio;
+        this.role = role;
+    }
+
     // Membuat primary key dengan nama kolom id, 
     // dengan auto increment, 
     // auto convert data type ke postgres setara Long

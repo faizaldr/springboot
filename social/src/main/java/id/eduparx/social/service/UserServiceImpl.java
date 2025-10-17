@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import id.eduparx.social.dto.UserDto;
 import id.eduparx.social.model.User;
+import id.eduparx.social.model.User.Role;
 import id.eduparx.social.repository.UserRepository;
 
 @Service
@@ -35,4 +36,19 @@ public class UserServiceImpl implements UserService {
         ).toList();
     }
 
+    @Override
+    public UserDto createUser(String username,String email,String password,Role role){
+        User user = new User();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(null);        
+        user.setRole(role);
+        User userResult= userRepository.save(user);
+
+        UserDto userDto = new UserDto();
+        userDto.setUsername(userResult.getUsername());
+        userDto.setEmail(userResult.getEmail());
+        userDto.setRole(userResult.getRole());
+        return userDto;
+    }
 }
