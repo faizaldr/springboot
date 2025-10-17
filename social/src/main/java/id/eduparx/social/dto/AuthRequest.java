@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size;
 public class AuthRequest {
     
     @NotBlank(message = "Username atau email tidak boleh kosong")
-    private String usernameOrEmail;
+    private String username;
     
     @NotBlank(message = "Password tidak boleh kosong")
     @Size(min = 6, message = "Password minimal 6 karakter")
@@ -18,18 +18,18 @@ public class AuthRequest {
     // Constructors
     public AuthRequest() {}
     
-    public AuthRequest(String usernameOrEmail, String password) {
-        this.usernameOrEmail = usernameOrEmail;
+    public AuthRequest(String username, String password) {
+        this.username = username;
         this.password = password;
     }
     
     // Getters and Setters
-    public String getUsernameOrEmail() {
-        return usernameOrEmail;
+    public String getusername() {
+        return username;
     }
     
-    public void setUsernameOrEmail(String usernameOrEmail) {
-        this.usernameOrEmail = usernameOrEmail;
+    public void setusername(String username) {
+        this.username = username;
     }
     
     public String getPassword() {

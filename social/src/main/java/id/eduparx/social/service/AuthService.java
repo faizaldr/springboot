@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class MyAuthService {
+public class AuthService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -40,7 +40,7 @@ public class MyAuthService {
         // Authenticate user
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
-                request.getUsernameOrEmail(),
+                request.getusername(),
                 request.getPassword()
             )
         );
@@ -50,8 +50,8 @@ public class MyAuthService {
 
         // Get user details
         User user = userRepository.findByUsernameOrEmail(
-            request.getUsernameOrEmail(), 
-            request.getUsernameOrEmail()
+            request.getusername(), 
+            request.getusername()
         ).orElseThrow(() -> new RuntimeException("User not found"));
 
         return new AuthResponse(jwt, user.getId(), user.getUsername(), 

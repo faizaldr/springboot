@@ -1,11 +1,15 @@
 package id.eduparx.social.config.security;
 
+
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 
 import id.eduparx.social.model.User;
 import id.eduparx.social.model.User.Role;
