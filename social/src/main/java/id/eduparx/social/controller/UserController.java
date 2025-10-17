@@ -1,6 +1,7 @@
 package id.eduparx.social.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import id.eduparx.social.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +19,7 @@ public class UserController {
     // mengurangi pembuatan objek baru di memory
     private UserRepository userRepository;
 
-    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 }
