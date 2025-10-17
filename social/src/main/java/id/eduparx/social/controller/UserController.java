@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import id.eduparx.social.dto.UserDto;
+import id.eduparx.social.dto.UserDtoRequest;
 import id.eduparx.social.model.User;
 import id.eduparx.social.service.UserServiceImpl;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 // PASSWORD
 
@@ -29,11 +32,18 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @PostMapping("/")
-    public ResponseEntity<UserDto> createUser(@RequestBody String username, @RequestBody String email,
-            @RequestBody String password, @RequestBody User.Role role) {
-        UserDto userDto = userService.createUser(username, email, password, role);
+    @PostMapping("")
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDtoRequest body) {
+        UserDto userDto = userService.createUser(body.getUsername(), body.getEmail(), body.getPassword(),
+                body.getRole());
         return ResponseEntity.ok(userDto);
+    }
+
+    @PutMapping("/{id}")
+    public UserDto putMethodName(@PathVariable Long id, @RequestBody UserDtoRequest body) {
+        UserDto userDto = userService.updateUser(id, body.getUsername(), body.getPassword(), body.getEmail(),
+                body.getRole());
+        return userDto;
     }
 
 }

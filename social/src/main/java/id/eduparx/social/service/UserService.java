@@ -9,4 +9,7 @@ public interface UserService {
     List<UserDto> getAll();
 
     UserDto createUser(String username,String email,String password,Role role);
+
+    UserDto updateUser(Long id, String username,String email,String password,Role role);
+
 }

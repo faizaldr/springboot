@@ -1,6 +1,7 @@
 package id.eduparx.social.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,24 +27,23 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> getAll() {
         List<User> users = userRepository.findAll();
         return users.stream().map(
-            u-> new UserDto(
-                u.getId(),
-                u.getUsername(),
-                u.getEmail(),
-                u.getBio(),
-                u.getRole()
-            )
-        ).toList();
+                u -> new UserDto(
+                        u.getId(),
+                        u.getUsername(),
+                        u.getEmail(),
+                        u.getBio(),
+                        u.getRole()))
+                .toList();
     }
 
     @Override
-    public UserDto createUser(String username,String email,String password,Role role){
+    public UserDto createUser(String username, String email, String password, Role role) {
         User user = new User();
         user.setUsername(username);
         user.setEmail(email);
-        user.setPassword(null);        
+        user.setPassword(password);
         user.setRole(role);
-        User userResult= userRepository.save(user);
+        User userResult = userRepository.save(user);
 
         UserDto userDto = new UserDto();
         userDto.setUsername(userResult.getUsername());
@@ -51,4 +51,23 @@ public class UserServiceImpl implements UserService {
         userDto.setRole(userResult.getRole());
         return userDto;
     }
+
+    @Override
+    public UserDto updateUser(Long id, String username, String email, String password, Role role) {
+        User userResult = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User Tidak Ditemukan"));
+
+        userResult.setUsername(username);
+        userResult.setEmail(email);
+        userResult.setPassword(password);
+        userResult.setRole(role);
+        userRepository.save(userResult);
+
+        UserDto userDto = new UserDto();
+        userDto.setUsername(userResult.getUsername());
+        userDto.setEmail(userResult.getEmail());
+        userDto.setRole(userResult.getRole());
+        return userDto;
+    }
+
 }
