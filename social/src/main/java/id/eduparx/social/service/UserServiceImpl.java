@@ -70,4 +70,17 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
+    @Override
+    public UserDto deleteUser(Long id) {
+        User userResult = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User Tidak Ditemukan"));
+
+        userRepository.delete(userResult);
+
+        UserDto userDto = new UserDto();
+        userDto.setUsername(userResult.getUsername());
+        userDto.setEmail(userResult.getEmail());
+        userDto.setRole(userResult.getRole());
+        return userDto;
+    }
 }

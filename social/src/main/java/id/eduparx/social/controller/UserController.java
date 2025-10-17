@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 // import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,10 +41,15 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public UserDto putMethodName(@PathVariable Long id, @RequestBody UserDtoRequest body) {
-        UserDto userDto = userService.updateUser(id, body.getUsername(), body.getPassword(), body.getEmail(),
+    public UserDto updateUser(@PathVariable Long id, @RequestBody UserDtoRequest body) {
+        UserDto userDto = userService.updateUser(id, body.getUsername(), body.getEmail(), body.getPassword(),
                 body.getRole());
         return userDto;
     }
 
+    @DeleteMapping("/{id}")
+    public UserDto deleteUser(@PathVariable Long id){
+        UserDto userDto = userService.deleteUser(id);
+        return userDto;
+    }
 }
