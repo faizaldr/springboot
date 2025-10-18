@@ -12,19 +12,19 @@ public class AuthResponse {
     private Long userId;
     private String username;
     private String email;
-    // private String fullName;
+    private String fullName;
     private User.Role role;
     
     // Constructors
     public AuthResponse() {}
     
     public AuthResponse(String accessToken, Long userId, String username, String email, 
-                       /*String fullName,*/ User.Role role) {
+                       String fullName, User.Role role) {
         this.accessToken = accessToken;
         this.userId = userId;
         this.username = username;
         this.email = email;
-        // this.fullName = fullName;
+        this.fullName = fullName;
         this.role = role;
     }
     
@@ -69,13 +69,13 @@ public class AuthResponse {
         this.email = email;
     }
     
-    // public String getFullName() {
-    //     return fullName;
-    // }
+    public String getFullName() {
+        return fullName;
+    }
     
-    // public void setFullName(String fullName) {
-    //     this.fullName = fullName;
-    // }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
     
     public User.Role getRole() {
         return role;

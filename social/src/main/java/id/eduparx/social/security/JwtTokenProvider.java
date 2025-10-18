@@ -1,4 +1,4 @@
-package id.eduparx.social.config.security;
+package id.eduparx.social.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -7,8 +7,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-
-import java.nio.file.attribute.UserPrincipal;
 import java.util.Date;
 
 /**
@@ -36,7 +34,7 @@ public class JwtTokenProvider {
         Date expiryDate = new Date(System.currentTimeMillis() + jwtExpirationInMs);
 
         return Jwts.builder()
-                .setSubject(userPrincipal.getName())
+                .setSubject(Long.toString(userPrincipal.getId()))
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
                 .signWith(getSigningKey(), SignatureAlgorithm.HS512)

@@ -1,11 +1,11 @@
 package id.eduparx.social.service;
 
-import id.eduparx.social.config.security.JwtTokenProvider;
 import id.eduparx.social.dto.AuthRequest;
 import id.eduparx.social.dto.AuthResponse;
-import id.eduparx.social.dto.UserDtoRequest;
+import id.eduparx.social.dto.UserRegistrationRequest;
 import id.eduparx.social.model.User;
 import id.eduparx.social.repository.UserRepository;
+import id.eduparx.social.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,7 +40,7 @@ public class AuthService {
         // Authenticate user
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
-                request.getusername(),
+                request.getUsernameOrEmail(),
                 request.getPassword()
             )
         );
@@ -50,18 +50,18 @@ public class AuthService {
 
         // Get user details
         User user = userRepository.findByUsernameOrEmail(
-            request.getusername(), 
-            request.getusername()
+            request.getUsernameOrEmail(), 
+            request.getUsernameOrEmail()
         ).orElseThrow(() -> new RuntimeException("User not found"));
 
         return new AuthResponse(jwt, user.getId(), user.getUsername(), 
-                               user.getEmail(), /*user.getFullName(),*/ user.getRole());
+                               user.getEmail(), user.getFullName(), user.getRole());
     }
 
     /**
      * User Registration
      */
-    public AuthResponse register(UserDtoRequest request) {
+    public AuthResponse register(UserRegistrationRequest request) {
         // Check if username already exists
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new RuntimeException("Username sudah digunakan!");
@@ -77,10 +77,10 @@ public class AuthService {
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        // user.setFullName(request.getFullName());
+        user.setFullName(request.getFullName());
         user.setBio(request.getBio());
         user.setRole(User.Role.USER); // Default role
-        // user.setIsActive(true);
+        user.setIsActive(true);
 
         // Save user to database
         user = userRepository.save(user);
@@ -89,7 +89,7 @@ public class AuthService {
         String jwt = tokenProvider.generateTokenFromUserId(user.getId());
 
         return new AuthResponse(jwt, user.getId(), user.getUsername(), 
-                               user.getEmail()/*, user.getFullName() */, user.getRole());
+                               user.getEmail(), user.getFullName(), user.getRole());
     }
 
     /**

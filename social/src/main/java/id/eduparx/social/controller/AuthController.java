@@ -2,7 +2,7 @@ package id.eduparx.social.controller;
 
 import id.eduparx.social.dto.AuthRequest;
 import id.eduparx.social.dto.AuthResponse;
-import id.eduparx.social.dto.UserDtoRequest;
+import id.eduparx.social.dto.UserRegistrationRequest;
 import id.eduparx.social.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -47,7 +47,7 @@ public class AuthController {
      */
     @PostMapping("/register")
     @Operation(summary = "User Registration", description = "Registrasi user baru")
-    public ResponseEntity<?> register(@Valid @RequestBody UserDtoRequest request) {
+    public ResponseEntity<?> register(@Valid @RequestBody UserRegistrationRequest request) {
         try {
             AuthResponse response = authService.register(request);
             return ResponseEntity.ok(response);
