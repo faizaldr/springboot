@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
-import id.eduparx.social.exception.FileStorageExeption;
+import id.eduparx.social.exception.FileStorageException;
 import id.eduparx.social.exception.InvalidFileException;
 import id.eduparx.social.exception.ResourceNotFoundException;
 
@@ -44,9 +44,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    @ExceptionHandler(FileStorageExeption.class)
+    @ExceptionHandler(FileStorageException.class)
     public ResponseEntity<Map<String, Object>> hadleFileStorageException(
-        FileStorageExeption ex
+        FileStorageException ex
     ){
         Map<String, Object> response = new HashMap<>();
         response.put("timestamp", LocalDateTime.now());
