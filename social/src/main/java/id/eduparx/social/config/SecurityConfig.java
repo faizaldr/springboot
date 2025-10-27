@@ -96,8 +96,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/comments/**").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/comments/**").authenticated()
                         .requestMatchers("/api/users/profile/**").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/files/download/**").permitAll() // buka akses download
-
+                        .requestMatchers(HttpMethod.GET, "/api/files/download/**").permitAll()
                         // Default - semua request lainnya perlu authentication
                         .anyRequest().authenticated());
 
