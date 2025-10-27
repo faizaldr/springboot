@@ -41,7 +41,7 @@ public class FileStorageService {
         try {
             Files.createDirectories(this.fileStorageLocation);
         } catch (IOException e) {
-            throw new FileStorageExeption("Tidak dapat membuat folder", e);
+            throw new FileStorageException("Tidak dapat membuat folder", e);
         }
     }
 
@@ -80,6 +80,8 @@ public class FileStorageService {
             // Copy file ke target penyimpanan
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+            return fileName;
 
         } catch (Exception e) {
             throw new FileStorageException("Tidak dapat menyimpan " + fileName, e);
