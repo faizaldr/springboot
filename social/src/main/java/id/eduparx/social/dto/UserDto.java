@@ -30,18 +30,6 @@ public class UserDto {
         this.role = role;
     }
 
-    public static UserDto fromModel(User user){
-        UserDto dto = new UserDto();
-        dto.setId(user.getId());
-        dto.setUsername(user.getUsername());
-        dto.setEmail(user.getEmail());
-        dto.setBio(user.getBio());
-        dto.setProfileImageUrl(user.getProfileImageUrl());
-        dto.setRole(user.getRole());
-
-        return dto;
-    }
-
     public Long getId() {
         return id;
     }
@@ -80,6 +68,19 @@ public class UserDto {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    // START HERE
+    
+    public static UserDto fromEntity(User user) {
+        UserDto dto = new UserDto();
+        dto.setId(user.getId());
+        dto.setUsername(user.getUsername());
+        dto.setEmail(user.getEmail());
+        dto.setBio(user.getBio());
+        dto.setProfileImageUrl(user.getProfileImageUrl());
+        dto.setRole(user.getRole());
+        return dto;
     }
 
 }

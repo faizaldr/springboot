@@ -1,5 +1,8 @@
 package id.eduparx.social.dto;
 
+/**
+ * DTO untuk response file upload
+ */
 public class FileUploadResponse {
     private String fileName;
     private String fileDownloadUri;
@@ -7,8 +10,11 @@ public class FileUploadResponse {
     private long size;
     private String uploadedBy;
 
-    public FileUploadResponse(){}
+    // Konstruktor tanpa argumen
+    public FileUploadResponse() {
+    }
 
+    // Konstruktor dengan semua argumen
     public FileUploadResponse(String fileName, String fileDownloadUri, String fileType, long size, String uploadedBy) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
@@ -17,6 +23,7 @@ public class FileUploadResponse {
         this.uploadedBy = uploadedBy;
     }
 
+    // Getter dan Setter
     public String getFileName() {
         return fileName;
     }
@@ -57,6 +64,15 @@ public class FileUploadResponse {
         this.uploadedBy = uploadedBy;
     }
 
-    
-    
+    // toString()
+    @Override
+    public String toString() {
+        return "FileUploadResponse{" +
+                "fileName='" + fileName + '\'' +
+                ", fileDownloadUri='" + fileDownloadUri + '\'' +
+                ", fileType='" + fileType + '\'' +
+                ", size=" + size +
+                ", uploadedBy='" + uploadedBy + '\'' +
+                '}';
+    }
 }
