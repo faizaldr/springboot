@@ -66,40 +66,40 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .authorizeHttpRequests(authz -> authz
-                // Public endpoints - tidak perlu authentication
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/public/**").permitAll()
-                
-                // Swagger/OpenAPI documentation - public access
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-                .requestMatchers("/api-docs/**").permitAll()
-                
-                // Health check endpoints
-                .requestMatchers("/actuator/**").permitAll()
-                
-                // Public read operations - tidak perlu login
-                .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/users/*/posts").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/comments/**").permitAll()
-                
-                // Admin only endpoints
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/posts/**").hasAnyRole("ADMIN", "MODERATOR")
-                .requestMatchers(HttpMethod.DELETE, "/api/comments/**").hasAnyRole("ADMIN", "MODERATOR")
-                
-                // Authenticated endpoints - perlu login
-                .requestMatchers(HttpMethod.POST, "/api/posts/**").authenticated()
-                .requestMatchers(HttpMethod.PUT, "/api/posts/**").authenticated()
-                .requestMatchers(HttpMethod.POST, "/api/comments/**").authenticated()
-                .requestMatchers(HttpMethod.PUT, "/api/comments/**").authenticated()
-                .requestMatchers("/api/users/profile/**").authenticated()
-                
-                // Default - semua request lainnya perlu authentication
-                .anyRequest().authenticated()
-            );
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeHttpRequests(authz -> authz
+                        // Public endpoints - tidak perlu authentication
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/public/**").permitAll()
+
+                        // Swagger/OpenAPI documentation - public access
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+                        .requestMatchers("/api-docs/**").permitAll()
+
+                        // Health check endpoints
+                        .requestMatchers("/actuator/**").permitAll()
+
+                        // Public read operations - tidak perlu login
+                        .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/users/*/posts").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/comments/**").permitAll()
+
+                        // Admin only endpoints
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/posts/**").hasAnyRole("ADMIN", "MODERATOR")
+                        .requestMatchers(HttpMethod.DELETE, "/api/comments/**").hasAnyRole("ADMIN", "MODERATOR")
+
+                        // Authenticated endpoints - perlu login
+                        .requestMatchers(HttpMethod.POST, "/api/posts/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/posts/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/comments/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/comments/**").authenticated()
+                        .requestMatchers("/api/users/profile/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/files/download/**").permitAll() // buka akses download
+
+                        // Default - semua request lainnya perlu authentication
+                        .anyRequest().authenticated());
 
         // Add JWT filter
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
