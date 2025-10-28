@@ -1,0 +1,29 @@
+services:
+  postgresdb:
+    image: postgres:latest
+    container_name: postgresdb
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: social
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: 123
+
+  social_app:
+    image: social_app:latest
+    container_name: run_social_app
+    restart: always
+    build:
+      context: ./social
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresdb
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresdb:5432/social
+      SPRING_DATASOURCE_USERNAME: app
+      SPRING_DATASOURCE_PASSWORD: 123
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop      
+
