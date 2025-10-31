@@ -119,6 +119,13 @@
 			<version>2.11.0</version>
 		</dependency>
 
+		
+		<!-- REDIS CLIENT-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+
 		<!-- REDIS CLIENT-->
 		<dependency>
 			<groupId>io.lettuce</groupId>
