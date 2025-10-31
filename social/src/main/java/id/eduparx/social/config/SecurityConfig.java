@@ -98,6 +98,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/profile/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/files/download/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/hallo").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/cache/**").permitAll()
                         // Default - semua request lainnya perlu authentication
                         .anyRequest().authenticated());
 
