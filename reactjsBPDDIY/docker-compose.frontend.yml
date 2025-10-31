@@ -1,0 +1,15 @@
+services:
+  react:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: "/api/"
+        VITE_AUTH_API_URL: "/api/auth/"
+    ports:
+      - "80:80"
+    networks: [social_net]
+
+networks:
+  social_net:
+    external: true
