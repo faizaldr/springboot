@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix
+      POSTGRES_DB: zabbix
+    # volumes:
+    #   - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U zabbix -d zabbix"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql:alpine-latest
+    depends_on:
+      - db
+    environment:
+      DB_SERVER_HOST: db
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix
+      POSTGRES_DB: zabbix
+      # opsi lain (opsional): ZBX_CACHESIZE, ZBX_HISTORYCACHESIZE, dll.
+    ports:
+      - "10051:10051"   # Penting: dibuka ke Windows host agar Agent2 bisa kirim data (active)
+    restart: unless-stopped
+
+  zabbix-web:
+    image: zabbix/zabbix-web-nginx-pgsql:alpine-latest
+    depends_on:
+      - zabbix-server
+      - db
+    environment:
+      DB_SERVER_HOST: db
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix
+      POSTGRES_DB: zabbix
+      ZBX_SERVER_HOST: zabbix-server
+      PHP_TZ: Asia/Jakarta
+    ports:
+      - "8080:8080"     # Akses Web UI: http://localhost:8080
+    restart: unless-stopped
+
+# volumes:
+#   db_data:
